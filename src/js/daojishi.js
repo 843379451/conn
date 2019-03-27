@@ -1,21 +1,49 @@
 window.onload = function () {
 
-    //倒计时
-    //1.设置截止时间
-    var endtime = new Date('2019-03-27 20:10:00');
-    var endTime = new Date(endtime);//转成时间格式
-    
 
     //2.计算时间差
-    var timer = setInterval(function(){
+    function timer() {
+        //倒计时
+        //1.设置截止时间
         //获取系统时间
         var nowtime = new Date();
-        var dis = parseInt((endTime - nowtime) / 1000);
-        //  console.log(dis);
+        // console.log(nowtime);
+        var years = nowtime.getFullYear();
+        var month = nowtime.getMonth()+1;
+        var day = nowtime.getDate();
+        var shi = nowtime.getHours();
+        var fen = nowtime.getMinutes();
+        // var miao = nowtime.getSeconds();
+        //判断当前时间是否为14:02:00之前，是则为今天的14:02结束抢购，否则为第二天14：02结束
+        if (shi < 14 || shi == 14 && fen < 2 || shi == 14 && fen < 2) {
+            //当天结束的
+            var endtime = new Date(years + '-' + month + '-' + day + ' '+ '14:02:00');
+
+
+        } else {
+            //明天结束的
+            day++;
+            var haha=years + '-' + month + '-' + day +' '+'14:02:00';
+            // console.log(haha);
+            var endtime = new Date(haha);
+            console.log(endtime);
+
+
+
+        }
+
+        // var starttime = new Date()
+        // var endtime = new Date('years'+'-'+'month'+'-'28 14:02:00');
+        // var endTime = new Date(endtime);//转成时间格式
+        // console.log(parseInt(endtime))
+
+
+        var dis = parseInt((endtime - nowtime) / 1000);
+        console.log(dis);
         var days = parseInt(dis / 3600 / 24);
-        var hours = parseInt(dis / 3600 ) % 24;
+        var hours = parseInt(dis / 3600) % 24;
         var min = parseInt(dis / 60) % 60;
-        var sec = dis% 60;
+        var sec = dis % 60;
         var time1 = toDb(days);
         var time2 = toDb(hours);
         var time3 = toDb(min);
@@ -52,18 +80,24 @@ window.onload = function () {
                 res += ' ';
             }
         }
+
+
         $('.xdsoft_size_sm').html(res);
 
-        // if(dis >= 0) {
-        //     setTimeout(timer,1000);
-        // }else{
-        //     endTime = endTime *1*24*60*60;
-        //     setTimeout(timer,1000);
+        // if (dis <= 0) {
+        //     // setInterval(timer);
+        //     // dis = 24 * 60 * 60 *1000;
+        //     clearInterval(arr);
+        //     $('.xdsoft_size_sm').html(' ');
         // }
 
-    },1000);
+    };
+    timer();
+    var arr;
+    arr = setInterval(timer, 1000);
 
-    // setTimeout(timer,1000);
+
+
 
 
 
